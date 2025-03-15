@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Pegawai</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+            background: linear-gradient(to right, #F0F8FF, #ffe7f9);
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #c3abc3;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tfoot td {
+            font-weight: bold;
+            background-color: #eeefdb;
+            color: rgb(0, 0, 0);
+        }
+    </style>
+</head>
+<body>
+    <h2>Data Pegawai</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nama Pegawai</th>
+                <th>Umur</th>
+                <th>Jabatan</th>
+                <th>Status</th>
+                <th>Gaji Pokok</th>
+                <th>Tunjangan Jabatan</th>
+                <th>BPJS</th>
+                <th>Tunjangan Keluarga</th>
+                <th>Total Gaji</th>
+            </tr>
+        </thead>
+        <tbody id="pegawaiData"></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">Total Gaji</td>
+                <td id="totalGaji"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        // Objek yang menyimpan data pegawai
+        const pegawai = {
+            nama: "Dodi Prayodi",
+            umur: 25,
+            jabatan: "Manajer",
+            status: "Menikah"
+        };
+
+        // Menentukan gaji pokok berdasarkan jabatan
+        let gajiPokok;
+        if (pegawai.jabatan === "Manajer") {
+            gajiPokok = 15000000; // 15 juta
+        } else if (pegawai.jabatan === "Asisten Manajer") {
+            gajiPokok = 10000000; // 10 juta
+        } else {
+            gajiPokok = 5000000; // 5 juta
+        }
+
+        // Menghitung tunjangan jabatan (15% dari gaji pokok)
+        let tunjanganJabatan = 0.15 * gajiPokok;
+        
+        // Menghitung BPJS (10% dari gaji pokok)
+        let bpjs = 0.10 * gajiPokok;
+        
+        // Menghitung tunjangan keluarga, hanya diberikan jika status "Menikah"
+        let tunjanganKeluarga = pegawai.status === "Menikah" ? 0.20 * gajiPokok : 0;
+        
+        // Menghitung total gaji dengan menjumlahkan semua komponen gaji
+        let totalGaji = gajiPokok + tunjanganJabatan + bpjs + tunjanganKeluarga;
+
+        // Menampilkan data pegawai ke dalam tabel secara dinamis
+        document.getElementById("pegawaiData").innerHTML = `
+            <tr>
+                <td>${pegawai.nama}</td>
+                <td>${pegawai.umur}</td>
+                <td>${pegawai.jabatan}</td>
+                <td>${pegawai.status}</td>
+                <td>Rp${gajiPokok.toLocaleString()}</td>
+                <td>Rp${tunjanganJabatan.toLocaleString()}</td>
+                <td>Rp${bpjs.toLocaleString()}</td>
+                <td>Rp${tunjanganKeluarga.toLocaleString()}</td>
+                <td>Rp${totalGaji.toLocaleString()}</td>
+            </tr>
+        `;
+        
+        // Menampilkan total gaji di bagian footer tabel
+        document.getElementById("totalGaji").textContent = `Rp${totalGaji.toLocaleString()}`;
+    </script>
+</body>
+</html>
