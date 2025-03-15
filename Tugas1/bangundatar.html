@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Luas</title>
+</head>
+<body>
+    <script>
+        // Fungsi untuk menghitung luas persegi panjang
+        function hitungLuasPersegiPanjang(panjang, lebar) {
+            // Luas = panjang * lebar
+            return panjang * lebar;
+        }
+
+        // Fungsi untuk menghitung luas bujur sangkar
+        function hitungLuasBujurSangkar(sisi) {
+            // Luas = sisi * sisi
+            return sisi * sisi;
+        }
+
+        // Fungsi untuk menghitung luas segitiga
+        function hitungLuasSegitiga(panjang, tinggi) {
+            // Luas = (panjang * tinggi) / 2
+            return (panjang * tinggi) / 2;
+        }
+
+        // Contoh penggunaan fungsi
+        const panjangPersegiPanjang = 10;
+        const lebarPersegiPanjang = 5;
+        const sisiBujurSangkar = 4;
+        const panjangSegitiga = 6;
+        const tinggiSegitiga = 3;
+
+        // Menghitung luas
+        const luasPersegiPanjang = hitungLuasPersegiPanjang(panjangPersegiPanjang, lebarPersegiPanjang);
+        const luasBujurSangkar = hitungLuasBujurSangkar(sisiBujurSangkar);
+        const luasSegitiga = hitungLuasSegitiga(panjangSegitiga, tinggiSegitiga);
+
+        // Menampilkan hasil
+        document.write("<h2>Hasil Perhitungan Luas</h2>");
+        
+        // Menampilkan hasil luas persegi panjang
+        document.write("<h3>Persegi Panjang</h3>");
+        document.write("Rumus : Panjang × Lebar<br>");
+        document.write("Luas = " + panjangPersegiPanjang + " × " + lebarPersegiPanjang + " = " + luasPersegiPanjang + "<br><br>");
+
+        // Menampilkan hasil luas bujur sangkar
+        document.write("<h3>Bujur Sangkar</h3>");
+        document.write("Rumus : Sisi × Sisi<br>");
+        document.write("Luas = " + sisiBujurSangkar + " × " + sisiBujurSangkar + " = " + luasBujurSangkar + "<br><br>");
+
+        // Menampilkan hasil luas segitiga
+        document.write("<h3>Segitiga</h3>");
+        document.write("Rumus : (Panjang × Tinggi) / 2<br>");
+        document.write("Luas = (" + panjangSegitiga + " × " + tinggiSegitiga + ") / 2 = " + luasSegitiga + "<br>");
+    </script>
+</body>
+</html>
