@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Sistem Manajemen Transportasi</title>
+</head>
+<body>
+    <h1>Sistem Manajemen Transportasi</h1>
+    
+    <div class="form-container">
+        <h2>Form Penyewaan Kendaraan</h2>
+        <label for="nama">Nama :</label>
+        <input type="text" id="nama" required>
+        <br>
+        <label for="nomorTelepon">Nomor Telepon :</label>
+        <input type="text" id="nomorTelepon" required>
+        <br>
+        <label for="merkKendaraan">Merk Kendaraan :</label>
+        <input type="text" id="merkKendaraan" required>
+        <br>
+        <label for="tipeKendaraan">Tipe Kendaraan :</label>
+        <select id="tipeKendaraan" required>
+            <option value="">Pilih Kendaraan</option>
+            <option value="Mobil">Mobil</option>
+            <option value="Motor">Motor</option>
+        </select>
+        <br>
+        <button id="sewaButton">Sewa Kendaraan</button>
+    </div>
+
+    <table id="pelangganTable">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Nomor Telepon</th>
+                <th>Kendaraan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data pelanggan akan ditambahkan di sini -->
+        </tbody>
+    </table>
+
+    <script>
+        // Kelas untuk kendaraan
+        class Kendaraan {
+            constructor(merk, tipe) {
+                this.merk = merk;
+                this.tipe = tipe;
+            }
+        }
+
+        // Kelas untuk pelanggan
+        class Pelanggan {
+            constructor(nama, nomorTelepon) {
+                this.nama = nama;
+                this.nomorTelepon = nomorTelepon;
+                this.kendaraanDisewa = null; // Awalnya tidak ada kendaraan yang disewa
+            }
+
+            // Metode untuk mencatat transaksi penyewaan kendaraan
+            sewaKendaraan(kendaraan) {
+                this.kendaraanDisewa = kendaraan;
+            }
+        }
+
+        // Kelas untuk sistem manajemen transportasi
+        class SistemManajemenTransportasi {
+            constructor() {
+                this.pelangganList = [];
+            }
+
+            // Metode untuk menambahkan pelanggan
+            tambahPelanggan(pelanggan) {
+                this.pelangganList.push(pelanggan);
+            }
+
+            // Metode untuk menampilkan daftar pelanggan yang sedang menyewa kendaraan
+            tampilkanPelangganSewa() {
+                const pelangganTableBody = document.querySelector('#pelangganTable tbody');
+                pelangganTableBody.innerHTML = ''; // Kosongkan tabel sebelumnya
+
+                this.pelangganList.forEach(pelanggan => {
+                    if (pelanggan.kendaraanDisewa) {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${pelanggan.nama}</td>
+                            <td>${pelanggan.nomorTelepon}</td>
+                            <td>${pelanggan.kendaraanDisewa.merk} ${pelanggan.kendaraanDisewa.tipe}</td>
+                        `;
+                        pelangganTableBody.appendChild(row);
+                    }
+                });
+            }
+        }
+
+        // Inisialisasi sistem
+        const sistem = new SistemManajemenTransportasi();
+
+        // Event listener untuk tombol sewa
+        document.getElementById('sewaButton').addEventListener('click', () => {
+            const nama = document.getElementById('nama').value;
+            const nomorTelepon = document.getElementById('nomorTelepon').value;
+            const merkKendaraan = document.getElementById('merkKendaraan').value;
+            const tipeKendaraan = document.getElementById('tipeKendaraan').value;
+
+            // Membuat objek kendaraan dan pelanggan
+            const kendaraan = new Kendaraan(merkKendaraan, tipeKendaraan);
+            const pelanggan = new Pelanggan(nama, nomorTelepon);
+            pelanggan.sewaKendaraan(kendaraan);
+
+            // Menambahkan pelanggan ke sistem
+            sistem.tambahPelanggan(pelanggan);
+
+            // Menampilkan daftar pelanggan yang sedang menyewa kendaraan
+            sistem.tampilkanPelangganSewa();
+
+            // Mengosongkan form setelah penyewaan
+            document.getElementById('nama').value = '';
+            document.getElementById('nomorTelepon').value = '';
+            document.getElementById('merkKendaraan').value = '';
+            document.getElementById('tipeKendaraan').value = '';
+        });
+    </script>
+</body>
+</html>
