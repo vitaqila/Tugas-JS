@@ -44,45 +44,23 @@
     </table>
 
     <script>
-        // Kelas untuk kendaraan
-        class Kendaraan {
-            constructor(merk, tipe) {
-                this.merk = merk;
-                this.tipe = tipe;
-            }
-        }
-
-        // Kelas untuk pelanggan
         class Pelanggan {
             constructor(nama, nomorTelepon) {
                 this.nama = nama;
                 this.nomorTelepon = nomorTelepon;
-                this.kendaraanDisewa = null; // Awalnya tidak ada kendaraan yang disewa
+                this.kendaraanDisewa = null;
             }
 
-            // Metode untuk mencatat transaksi penyewaan kendaraan
-            sewaKendaraan(kendaraan) {
-                this.kendaraanDisewa = kendaraan;
-            }
-        }
-
-        // Kelas untuk sistem manajemen transportasi
-        class SistemManajemenTransportasi {
-            constructor() {
-                this.pelangganList = [];
+            sewaKendaraan(merk, tipe) {
+                this.kendaraanDisewa = { merk, tipe };
+                Pelanggan.daftarPelanggan.push(this);
+                this.tampilkanPelangganSewa();
             }
 
-            // Metode untuk menambahkan pelanggan
-            tambahPelanggan(pelanggan) {
-                this.pelangganList.push(pelanggan);
-            }
-
-            // Metode untuk menampilkan daftar pelanggan yang sedang menyewa kendaraan
             tampilkanPelangganSewa() {
                 const pelangganTableBody = document.querySelector('#pelangganTable tbody');
-                pelangganTableBody.innerHTML = ''; // Kosongkan tabel sebelumnya
-
-                this.pelangganList.forEach(pelanggan => {
+                pelangganTableBody.innerHTML = '';
+                Pelanggan.daftarPelanggan.forEach(pelanggan => {
                     if (pelanggan.kendaraanDisewa) {
                         const row = document.createElement('tr');
                         row.innerHTML = `
@@ -96,32 +74,22 @@
             }
         }
 
-        // Inisialisasi sistem
-        const sistem = new SistemManajemenTransportasi();
+        Pelanggan.daftarPelanggan = [];
 
-        // Event listener untuk tombol sewa
         document.getElementById('sewaButton').addEventListener('click', () => {
             const nama = document.getElementById('nama').value;
             const nomorTelepon = document.getElementById('nomorTelepon').value;
             const merkKendaraan = document.getElementById('merkKendaraan').value;
             const tipeKendaraan = document.getElementById('tipeKendaraan').value;
 
-            // Membuat objek kendaraan dan pelanggan
-            const kendaraan = new Kendaraan(merkKendaraan, tipeKendaraan);
-            const pelanggan = new Pelanggan(nama, nomorTelepon);
-            pelanggan.sewaKendaraan(kendaraan);
-
-            // Menambahkan pelanggan ke sistem
-            sistem.tambahPelanggan(pelanggan);
-
-            // Menampilkan daftar pelanggan yang sedang menyewa kendaraan
-            sistem.tampilkanPelangganSewa();
-
-            // Mengosongkan form setelah penyewaan
-            document.getElementById('nama').value = '';
-            document.getElementById('nomorTelepon').value = '';
-            document.getElementById('merkKendaraan').value = '';
-            document.getElementById('tipeKendaraan').value = '';
+            if (nama && nomorTelepon && merkKendaraan && tipeKendaraan) {
+                const pelanggan = new Pelanggan(nama, nomorTelepon);
+                pelanggan.sewaKendaraan(merkKendaraan, tipeKendaraan);
+                document.getElementById('nama').value = '';
+                document.getElementById('nomorTelepon').value = '';
+                document.getElementById('merkKendaraan').value = '';
+                document.getElementById('tipeKendaraan').value = '';
+            }
         });
     </script>
 </body>
