@@ -2,9 +2,9 @@
 let produklist = [
     { id: 1, nama: "Laptop", harga: 12000000 },
     { id: 2, nama: "Smartphone", harga: 5000000 },
-    { id: 3, nama: "Tablet", harga: 7000000 }, 
-    { id: 4, nama: "Headphone", harga: 1500000 }, 
-    { id: 5, nama: "Smartwatch", harga: 3000000 } 
+    { id: 3, nama: "Tablet", harga: 7000000 }, // Menambahkan Produk
+    { id: 4, nama: "Headphone", harga: 1500000 }, // Menambahkan Produk
+    { id: 5, nama: "Smartwatch", harga: 3000000 } // Menambahkan Produk
 ];
 
 const eventHandler = {
@@ -22,10 +22,13 @@ const eventHandler = {
 // **Menghapus Produk dengan Rest Parameter**
 function hapusProduk(...ids) {
     produklist = produklist.filter(product => !ids.includes(product.id));
+    console.log(`Produk dengan ID : ${ids} berhasil dihapus.`);
 }
 
 // **Menampilkan Produk dengan Destructuring**
 function tampilkanProduk() {
+    console.log("<=================================<->==================================>");
+    console.log("<----------------------------Daftar Produk----------------------------->");
     produklist.forEach(({ id, nama, harga }) => {
         console.log(`ID: ${id}, Nama: ${nama}, Harga: ${harga}`);
     });
@@ -34,6 +37,7 @@ function tampilkanProduk() {
 // **Menambahkan Produk dengan Spread Operator**
 function tambahProduk(id, nama, harga) {
     produklist = [...produklist,{ id, nama, harga }];
+    console.log(`Produk baru berhasil ditambahkan ID : ${id}, Nama : ${nama}, Harga : ${harga}.`);
 }
 
 tampilkanProduk(); // Menampilkan semua produk
